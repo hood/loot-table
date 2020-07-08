@@ -1,7 +1,7 @@
 {
   "name": "loot-table",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A simple loot table implementation in TypeScript.",
   "main": "dist/loot-table.js",
   "scripts": {
     "build": "rimraf dist & tsc",
@@ -19,7 +19,7 @@
     "url": "https://github.com/0xCAP/loot-table.git"
   },
   "author": "Andrea Cappuccio <0xCAP@mail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "jest": "^26.1.0",
