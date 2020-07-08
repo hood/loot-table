@@ -1,5 +1,5 @@
 import { LootTable } from "../src/loot-table";
-import Item from "../src/item";
+import LootItem from "../src/loot-item";
 
 describe("LootTable", () => {
   test("LootTable is defined", () => {
@@ -9,7 +9,7 @@ describe("LootTable", () => {
   test("the loot table's total weight is calculated correctly", () => {
     const lootTable: LootTable = new LootTable();
 
-    const items: Item[] = [
+    const items: LootItem[] = [
       { id: "1", item: "Item one", dropRate: 10 },
       { id: "2", item: "Item two", dropRate: 40 },
     ];
