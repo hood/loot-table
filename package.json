@@ -1,6 +1,6 @@
 {
   "name": "@0xcap/loot-table",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple loot table implementation in TypeScript.",
   "private": false,
   "main": "dist/loot-table.js",
