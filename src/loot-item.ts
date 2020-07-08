@@ -1,7 +1,13 @@
-type LootItem = {
-  id: string;
+import { v5 as uuid } from "uuid";
+
+export default class LootItem {
+  private readonly id: string;
   item: any;
   dropRate: number;
-};
 
-export default LootItem;
+  constructor(item: any, dropRate: number) {
+    this.item = item;
+    this.dropRate = dropRate;
+    this.id = uuid(JSON.stringify(item), uuid.URL);
+  }
+}
