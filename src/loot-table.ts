@@ -1,3 +1,4 @@
+import * as util from "util";
 import LootItem from "./loot-item";
 import { randomInRange } from "./utils";
 
@@ -14,8 +15,15 @@ export class LootTable {
       .reduce((total: number, sum: number) => (total += sum));
   }
 
-  addItem(item: LootItem): void {
-    this.items.push(item);
+  addItem(item: any, dropRate: number): void {
+    if (
+      this.items.some((lootItem: LootItem) =>
+        util.isDeepStrictEqual(lootItem.item, item)
+      )
+    )
+      throw new Error("Cannot insert duplicate item.");
+
+    this.items.push(new LootItem(item, dropRate));
   }
 
   dropItem(): Pick<LootItem, "item"> {
