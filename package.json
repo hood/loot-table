@@ -1,5 +1,5 @@
 {
-  "name": "loot-table",
+  "name": "@0xcap/loot-table",
   "version": "0.1.0",
   "description": "A simple loot table implementation in TypeScript.",
   "main": "dist/loot-table.js",
