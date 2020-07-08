@@ -1,24 +1,39 @@
 import { LootTable } from "../src/loot-table";
-import LootItem from "../src/loot-item";
 
 describe("LootTable", () => {
-  test("LootTable is defined", () => {
+  it("should be defined", () => {
     expect(LootTable).toBeDefined();
   });
 
-  test("the loot table's total weight is calculated correctly", () => {
+  it("should calculate total weight correctly", () => {
     const lootTable: LootTable = new LootTable();
 
-    const items: LootItem[] = [
-      { id: "1", item: "Item one", dropRate: 10 },
-      { id: "2", item: "Item two", dropRate: 40 },
+    const itemsPayload: any[] = [
+      { item: "Item one", dropRate: 10 },
+      { item: "Item two", dropRate: 40 },
     ];
 
-    lootTable.addItem(items[0]);
-    lootTable.addItem(items[1]);
+    lootTable.addItem(itemsPayload[0].item, itemsPayload[0].dropRate);
+    lootTable.addItem(itemsPayload[1].item, itemsPayload[1].dropRate);
 
     expect(lootTable.totalWeight).toBe(
-      items.reduce((total, item) => (total += item.dropRate), 0)
+      itemsPayload.reduce((total, item) => (total += item.dropRate), 0)
     );
+  });
+
+  test("show throw an error if a duplicate item is inserted", () => {
+    const lootTable: LootTable = new LootTable();
+
+    const addDuplicateItems = () => {
+      const itemsPayload: any[] = [
+        { item: "myItem", dropRate: 10 },
+        { item: "myItem", dropRate: 40 },
+      ];
+
+      for (const item of itemsPayload)
+        lootTable.addItem(item.item, item.dropRate);
+    };
+
+    expect(() => addDuplicateItems()).toThrow();
   });
 });
