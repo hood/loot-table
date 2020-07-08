@@ -1,0 +1,26 @@
+{
+  "name": "loot-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/loot-table.js",
+  "scripts": {
+    "build": "rimraf dist & tsc",
+    "start": "node dist/loot-table.js"
+  },
+  "keywords": [
+    "loot",
+    "table",
+    "random",
+    "drops"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "ciao"
+  },
+  "author": "Andrea Cappuccio <cap7c8@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.0.0-dev.20200708"
+  }
+}
