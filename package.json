@@ -1,6 +1,6 @@
 {
   "name": "@0xcap/loot-table",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A simple loot table implementation in TypeScript.",
   "private": false,
   "main": "dist/loot-table.js",
@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/0xCAP/loot-table.git"
   },
-  "author": "Andrea Cappuccio <0xCAP@mail.com>",
+  "author": "Andrea Cappuccio <hood@null.net>",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^27.4.1",
