@@ -6,7 +6,7 @@ describe("LootTable", () => {
   });
 
   it("should calculate total weight correctly", () => {
-    const lootTable: LootTable = new LootTable();
+    const lootTable: LootTable<any> = new LootTable();
 
     const itemsPayload: any[] = [
       { item: "Item one", dropRate: 10 },
@@ -21,13 +21,29 @@ describe("LootTable", () => {
     );
   });
 
-  test("show throw an error if a duplicate item is inserted", () => {
-    const lootTable: LootTable = new LootTable();
+  test("should throw an error if a duplicate item is inserted", () => {
+    const lootTable: LootTable<any> = new LootTable();
 
     const addDuplicateItems = () => {
       const itemsPayload: any[] = [
         { item: "myItem", dropRate: 10 },
         { item: "myItem", dropRate: 40 },
+      ];
+
+      for (const item of itemsPayload)
+        lootTable.addItem(item.item, item.dropRate);
+    };
+
+    expect(() => addDuplicateItems()).toThrow();
+  });
+
+  test("should throw an error if a structured duplicate item is inserted", () => {
+    const lootTable: LootTable<any> = new LootTable();
+
+    const addDuplicateItems = () => {
+      const itemsPayload: any[] = [
+        { item: { a: 1, b: ["two"] }, dropRate: 10 },
+        { item: { a: 1, b: ["two"] }, dropRate: 40 },
       ];
 
       for (const item of itemsPayload)

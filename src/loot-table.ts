@@ -1,23 +1,24 @@
 import * as util from "util";
-import LootItem from "./loot-item";
 import { randomInRange } from "./utils";
+import LootItem from "./loot-item";
 
-export class LootTable {
-  items: LootItem[];
+export class LootTable<T> {
+  private items: LootItem<T>[];
 
   constructor() {
     this.items = [];
   }
 
-  get totalWeight(): number {
-    return this.items
-      .map((item: LootItem) => item.dropRate)
-      .reduce((total: number, sum: number) => (total += sum));
+  public get totalWeight(): number {
+    return this.items.reduce(
+      (total: number, item: LootItem<T>) => total + item.dropRate,
+      0
+    );
   }
 
-  addItem(item: any, dropRate: number): void {
+  public addItem(item: T, dropRate: number): void {
     if (
-      this.items.some((lootItem: LootItem) =>
+      this.items.some((lootItem: LootItem<T>) =>
         util.isDeepStrictEqual(lootItem.item, item)
       )
     )
@@ -26,11 +27,9 @@ export class LootTable {
     this.items.push(new LootItem(item, dropRate));
   }
 
-  dropItem(): Pick<LootItem, "item"> {
-    // Extract a random integer between 0 and "totalWeight"
+  public dropItem(): LootItem<T>["item"] {
     let randomNumber: number = randomInRange(0, this.totalWeight);
 
-    // Pick the item to drop
     for (const item of this.items)
       if (randomNumber <= item.dropRate) return item.item;
       else randomNumber -= item.dropRate;
