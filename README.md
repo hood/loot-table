@@ -9,20 +9,20 @@ A simple loot table implementation in TypeScript.
 
 #### Using yarn
 
-`yarn add loot-table`
+`yarn add @0xcap/loot-table`
 
 #### Using pnpm
 
-`pnpm add loot-table`
+`pnpm add @0xcap/loot-table`
 
 #### Using npm
 
-`npm install loot-table`
+`npm install @0xcap/loot-table`
 
 ## Usage
 
 ```typescript
-import LootTable from "0xcap/loot-table";
+import { LootTable } from "@0xcap/loot-table";
 
 const lootTable = new LootTable();
 

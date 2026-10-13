@@ -3,12 +3,11 @@
   "version": "1.0.1",
   "description": "A simple loot table implementation in TypeScript.",
   "private": false,
-  "main": "dist/loot-table.js",
-  "scripts": {
-    "build": "rimraf dist & tsc",
-    "start": "node dist/loot-table.js",
-    "test": "jest",
-    "publish": "npm publish --access=public"
+  "license": "MIT",
+  "author": "Andrea Cappuccio <hood@null.net>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xCAP/loot-table.git"
   },
   "keywords": [
     "loot",
@@ -16,21 +15,32 @@
     "random",
     "drops"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/0xCAP/loot-table.git"
+  "type": "module",
+  "main": "./dist/loot-table.cjs",
+  "module": "./dist/loot-table.js",
+  "types": "./dist/loot-table.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/loot-table.d.ts",
+      "import": "./dist/loot-table.js",
+      "require": "./dist/loot-table.cjs"
+    }
   },
-  "author": "Andrea Cappuccio <hood@null.net>",
-  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "prepublishOnly": "pnpm typecheck && pnpm test && pnpm build",
+    "release": "pnpm publish --access public"
+  },
   "devDependencies": {
-    "@types/jest": "^27.4.1",
-    "@types/uuid": "^8.3.4",
-    "jest": "^27.5.1",
-    "rimraf": "^3.0.2",
-    "ts-jest": "^27.1.4",
-    "typescript": "^4.6.3"
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
   },
-  "dependencies": {
-    "uuid": "^8.3.2"
-  }
+  "packageManager": "pnpm@12.11.2"
 }

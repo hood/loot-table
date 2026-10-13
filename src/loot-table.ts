@@ -1,6 +1,6 @@
-import * as util from "util";
-import { randomInRange } from "./utils";
-import LootItem from "./loot-item";
+import * as util from "node:util";
+import { randomInRange } from "./utils.ts";
+import LootItem from "./loot-item.ts";
 
 export class LootTable<T> {
   private items: LootItem<T>[];
@@ -12,26 +12,28 @@ export class LootTable<T> {
   public get totalWeight(): number {
     return this.items.reduce(
       (total: number, item: LootItem<T>) => total + item.dropRate,
-      0
+      0,
     );
   }
 
-  public addItem(item: T, dropRate: number): void {
+  public addItem(item: T, dropRate: number): Error | void {
     if (
       this.items.some((lootItem: LootItem<T>) =>
         util.isDeepStrictEqual(lootItem.item, item)
       )
-    )
-      throw new Error("Cannot insert duplicate item.");
+    ) {
+      return new Error("Cannot insert duplicate item.");
+    }
 
     this.items.push(new LootItem(item, dropRate));
   }
 
-  public dropItem(): LootItem<T>["item"] {
+  public dropItem(): T | undefined {
     let randomNumber: number = randomInRange(0, this.totalWeight);
 
-    for (const item of this.items)
+    for (const item of this.items) {
       if (randomNumber <= item.dropRate) return item.item;
       else randomNumber -= item.dropRate;
+    }
   }
 }

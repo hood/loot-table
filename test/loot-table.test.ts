@@ -1,55 +1,55 @@
-import { LootTable } from "../src/loot-table";
+import { describe, it } from "node:test";
+import assert from "node:assert/strict";
+import { LootTable } from "../src/loot-table.ts";
 
 describe("LootTable", () => {
   it("should be defined", () => {
-    expect(LootTable).toBeDefined();
+    assert.ok(LootTable);
   });
 
   it("should calculate total weight correctly", () => {
-    const lootTable: LootTable<any> = new LootTable();
+    const lootTable = new LootTable<string>();
 
-    const itemsPayload: any[] = [
+    const itemsPayload = [
       { item: "Item one", dropRate: 10 },
       { item: "Item two", dropRate: 40 },
     ];
 
-    lootTable.addItem(itemsPayload[0].item, itemsPayload[0].dropRate);
-    lootTable.addItem(itemsPayload[1].item, itemsPayload[1].dropRate);
+    for (const { item, dropRate } of itemsPayload)
+      lootTable.addItem(item, dropRate);
 
-    expect(lootTable.totalWeight).toBe(
-      itemsPayload.reduce((total, item) => (total += item.dropRate), 0)
+    assert.equal(
+      lootTable.totalWeight,
+      itemsPayload.reduce((total, item) => total + item.dropRate, 0),
     );
   });
 
-  test("should throw an error if a duplicate item is inserted", () => {
-    const lootTable: LootTable<any> = new LootTable();
+  it("should return an error if a duplicate item is inserted", () => {
+    const lootTable = new LootTable<string>();
 
-    const addDuplicateItems = () => {
-      const itemsPayload: any[] = [
-        { item: "myItem", dropRate: 10 },
-        { item: "myItem", dropRate: 40 },
-      ];
-
-      for (const item of itemsPayload)
-        lootTable.addItem(item.item, item.dropRate);
-    };
-
-    expect(() => addDuplicateItems()).toThrow();
+    assert.equal(lootTable.addItem("myItem", 10), undefined);
+    assert.ok(lootTable.addItem("myItem", 40) instanceof Error);
+    assert.equal(lootTable.totalWeight, 10);
   });
 
-  test("should throw an error if a structured duplicate item is inserted", () => {
-    const lootTable: LootTable<any> = new LootTable();
+  it("should return an error if a structured duplicate item is inserted", () => {
+    const lootTable = new LootTable<{ a: number; b: string[] }>();
 
-    const addDuplicateItems = () => {
-      const itemsPayload: any[] = [
-        { item: { a: 1, b: ["two"] }, dropRate: 10 },
-        { item: { a: 1, b: ["two"] }, dropRate: 40 },
-      ];
+    assert.equal(lootTable.addItem({ a: 1, b: ["two"] }, 10), undefined);
+    assert.ok(lootTable.addItem({ a: 1, b: ["two"] }, 40) instanceof Error);
+    assert.equal(lootTable.totalWeight, 10);
+  });
 
-      for (const item of itemsPayload)
-        lootTable.addItem(item.item, item.dropRate);
-    };
+  it("should drop an item from the table", () => {
+    const lootTable = new LootTable<string>();
+    lootTable.addItem("a", 1);
+    lootTable.addItem("b", 3);
 
-    expect(() => addDuplicateItems()).toThrow();
+    for (let i = 0; i < 100; i++)
+      assert.ok(["a", "b"].includes(lootTable.dropItem()!));
+  });
+
+  it("should drop nothing from an empty table", () => {
+    assert.equal(new LootTable().dropItem(), undefined);
   });
 });

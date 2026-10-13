@@ -1,19 +1,17 @@
 {
-  "version": "1.0.0",
   "compilerOptions": {
-    "lib": ["DOM", "ES5", "ES6", "ESNext"],
-    "esModuleInterop": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "ES6",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "sourceRoot": "./src",
-    "pretty": true
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules", "dist", "test"]
+  "include": ["src", "test", "vite.config.ts"]
 }
